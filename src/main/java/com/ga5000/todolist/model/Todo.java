@@ -3,6 +3,7 @@ package com.ga5000.todolist.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "todos")
@@ -11,7 +12,7 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(nullable = false)
@@ -26,14 +27,24 @@ public class Todo {
     @Column(nullable = false)
     private LocalDateTime creationDate;
 
-    public Todo(String title, String description, boolean finished, int priority) {
+    @Column(nullable = false)
+    private LocalDateTime expireDate;
+
+    @Column(nullable = false)
+    private boolean expired;
+
+    public Todo(){}
+
+    public Todo(Long id, String title, String description, boolean finished, int priority, LocalDateTime creationDate, LocalDateTime expireDate, boolean expired) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.finished = finished;
         this.priority = priority;
+        this.creationDate = creationDate;
+        this.expireDate = expireDate;
+        this.expired = expired;
     }
-
-    public Todo(){}
 
     public Long getId() {
         return id;
@@ -51,9 +62,13 @@ public class Todo {
         this.title = title;
     }
 
-    public String getDescription() {return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) {this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public boolean isFinished() {
         return finished;
@@ -79,5 +94,32 @@ public class Todo {
         this.creationDate = creationDate;
     }
 
+    public LocalDateTime getExpireDate() {
+        return expireDate;
+    }
 
+    public void setExpireDate(LocalDateTime expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Todo todo = (Todo) o;
+        return Objects.equals(title, todo.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title);
+    }
 }
