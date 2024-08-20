@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class TodoServiceImpl implements TodoService{
 
+
     private final TodoRepository todoRepository;
 
     public TodoServiceImpl(TodoRepository todoRepository) {
@@ -37,7 +38,6 @@ public class TodoServiceImpl implements TodoService{
         todoRepository.save(newTodo);
 
         return toTodoDTO(newTodo);
-
     }
 
     @Override
@@ -81,9 +81,11 @@ public class TodoServiceImpl implements TodoService{
                 todo.getPriority(),
                 todo.getCreationDate(),
                 todo.getExpireDate(),
-                todo.isExpired()
+                 todo.isExpired()
         );
     }
+
+
 
 
 }

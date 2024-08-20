@@ -100,6 +100,7 @@ public class Todo {
 
     public void setExpireDate(LocalDateTime expireDate) {
         this.expireDate = expireDate;
+        this.expired = isExpired(expireDate);
     }
 
     public boolean isExpired() {
@@ -121,5 +122,9 @@ public class Todo {
     @Override
     public int hashCode() {
         return Objects.hashCode(title);
+    }
+
+    private boolean isExpired(LocalDateTime expireDate){
+        return LocalDateTime.now().isAfter(expireDate);
     }
 }
